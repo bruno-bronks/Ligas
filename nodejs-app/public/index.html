@@ -26,16 +26,51 @@
             </div>
 
             <div class="form-group">
-                <label for="leagues">Ligas para exibir</label>
-                <select id="leagues" multiple size="7">
-                    <option value="BL1" selected>Alemanha - Bundesliga</option>
-                    <option value="PL" selected>Inglaterra - Premier League</option>
-                    <option value="FL1" selected>França - Ligue 1</option>
-                    <option value="DED" selected>Holanda - Eredivisie</option>
-                    <option value="BSA" selected>Brasil - Série A</option>
-                    <option value="PD" selected>Espanha - La Liga</option>
-                    <option value="CL">Champions League</option>
-                </select>
+                <label>Ligas para exibir</label>
+                <div class="leagues-grid" id="leaguesContainer">
+                    <label class="league-item">
+                        <input type="checkbox" value="BL1" checked>
+                        <img src="https://crests.football-data.org/BL1.svg" alt="Bundesliga" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span class="league-emoji" style="display:none;">🇩🇪</span>
+                        <span class="league-name">Bundesliga</span>
+                    </label>
+                    <label class="league-item">
+                        <input type="checkbox" value="PL" checked>
+                        <img src="https://crests.football-data.org/PL.svg" alt="Premier League" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span class="league-emoji" style="display:none;">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
+                        <span class="league-name">Premier League</span>
+                    </label>
+                    <label class="league-item">
+                        <input type="checkbox" value="FL1" checked>
+                        <img src="https://crests.football-data.org/FL1.svg" alt="Ligue 1" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span class="league-emoji" style="display:none;">🇫🇷</span>
+                        <span class="league-name">Ligue 1</span>
+                    </label>
+                    <label class="league-item">
+                        <input type="checkbox" value="DED" checked>
+                        <img src="https://crests.football-data.org/DED.svg" alt="Eredivisie" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span class="league-emoji" style="display:none;">🇳🇱</span>
+                        <span class="league-name">Eredivisie</span>
+                    </label>
+                    <label class="league-item">
+                        <input type="checkbox" value="BSA" checked>
+                        <img src="https://crests.football-data.org/BSA.svg" alt="Brasileirão" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span class="league-emoji" style="display:none;">🇧🇷</span>
+                        <span class="league-name">Brasileirão A</span>
+                    </label>
+                    <label class="league-item">
+                        <input type="checkbox" value="PD" checked>
+                        <img src="https://crests.football-data.org/PD.svg" alt="La Liga" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span class="league-emoji" style="display:none;">🇪🇸</span>
+                        <span class="league-name">La Liga</span>
+                    </label>
+                    <label class="league-item" id="clLeagueItem">
+                        <input type="checkbox" value="CL" checked>
+                        <img src="https://crests.football-data.org/CL.svg" alt="Champions League" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span class="league-emoji" style="display:none;">🏆</span>
+                        <span class="league-name">Champions League</span>
+                    </label>
+                </div>
             </div>
 
             <div class="form-group">

@@ -12,7 +12,7 @@ const BASE_LEAGUES = {
 // Elementos DOM
 const apiKeyInput = document.getElementById('apiKey');
 const includeCLCheckbox = document.getElementById('includeCL');
-const leaguesSelect = document.getElementById('leagues');
+const leaguesContainer = document.getElementById('leaguesContainer');
 const daysSlider = document.getElementById('days');
 const daysValue = document.getElementById('daysValue');
 const dateFromInput = document.getElementById('dateFrom');
@@ -52,7 +52,7 @@ async function loadData() {
         return;
     }
 
-    const selectedLeagues = Array.from(leaguesSelect.selectedOptions).map(opt => opt.value);
+    const selectedLeagues = Array.from(leaguesContainer.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value);
     
     if (selectedLeagues.length === 0) {
         showError('Selecione ao menos uma liga');
@@ -441,16 +441,17 @@ function downloadCSV(data, filename) {
 
 function updateLeaguesList() {
     const includeCL = includeCLCheckbox.checked;
-    const clOption = Array.from(leaguesSelect.options).find(opt => opt.value === 'CL');
+    const clLeagueItem = document.getElementById('clLeagueItem');
     
-    if (includeCL && !clOption) {
-        const option = document.createElement('option');
-        option.value = 'CL';
-        option.textContent = 'Champions League';
-        option.selected = true;
-        leaguesSelect.appendChild(option);
-    } else if (!includeCL && clOption) {
-        clOption.remove();
+    if (clLeagueItem) {
+        if (includeCL) {
+            clLeagueItem.style.display = 'flex';
+        } else {
+            clLeagueItem.style.display = 'none';
+            // Desmarcar CL se estiver marcado
+            const clCheckbox = clLeagueItem.querySelector('input[type="checkbox"]');
+            if (clCheckbox) clCheckbox.checked = false;
+        }
     }
 }
 
@@ -471,7 +472,12 @@ function hideError() {
     errorDiv.classList.add('hidden');
 }
 
-// Inicialização
-updateLeaguesList();
-includeCLCheckbox.addEventListener('change', updateLeaguesList);
+// Inicialização - garantir que CL apareça se checkbox estiver marcado
+document.addEventListener('DOMContentLoaded', () => {
+    updateLeaguesList();
+});
+
+includeCLCheckbox.addEventListener('change', () => {
+    updateLeaguesList();
+});
 
