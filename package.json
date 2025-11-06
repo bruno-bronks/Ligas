@@ -1,0 +1,13 @@
+{
+  "name": "ligas-root",
+  "version": "1.0.0",
+  "description": "Root package.json for Railway deployment",
+  "scripts": {
+    "build": "cd nodejs-app && npm install",
+    "start": "cd nodejs-app && npm start"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
+
