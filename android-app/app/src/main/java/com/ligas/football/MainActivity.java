@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     // Para desenvolvimento local (emulador), use: "http://10.0.2.2:3000"
     // Para dispositivo físico (mesma rede), use: "http://192.168.1.X:3000"
     // Para produção, use a URL do seu servidor: "https://seu-servidor.com"
-    private static final String APP_URL = "http://10.0.2.2:3000";
+    private static final String APP_URL = "https://ligas-production.up.railway.app";
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
