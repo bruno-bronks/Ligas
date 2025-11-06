@@ -1,9 +1,0 @@
-[phases.setup]
-nixPkgs = ["nodejs-18_x", "npm"]
-
-[phases.install]
-cmds = ["cd nodejs-app && npm install"]
-
-[start]
-cmd = "cd nodejs-app && npm start"
-
