@@ -174,7 +174,8 @@ body {
     position: relative;
     flex-direction: column;
     flex: 1;
-    min-width: 0;
+    min-width: 100px;
+    max-width: 150px;
 }
 
 .league-item:hover .league-icon-wrapper {
@@ -701,16 +702,40 @@ table tr:last-child td {
 /* Responsive */
 @media (max-width: 768px) {
     .main-content {
-        width: 100%;
-        padding: 20px;
+        width: calc(100% - 10px);
+        padding: 15px;
+        margin: 0 5px;
+    }
+
+    .controls-section {
+        padding: 15px;
     }
 
     .controls-grid {
         grid-template-columns: 1fr;
+        gap: 15px;
     }
 
     .leagues-grid {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .league-item {
+        flex: 0 0 auto;
+        min-width: 90px;
+        max-width: 110px;
+        padding: 8px 5px;
+    }
+
+    .league-icon-wrapper {
+        width: 60px;
+        height: 60px;
+    }
+
+    .league-name {
+        font-size: 0.75rem;
+        margin-top: 3px;
     }
 
     .columns {
@@ -720,6 +745,39 @@ table tr:last-child td {
     .team-crest {
         width: 20px;
         height: 20px;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .caption {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .league-item {
+        min-width: 80px;
+        max-width: 90px;
+        padding: 5px;
+    }
+
+    .league-icon-wrapper {
+        width: 50px;
+        height: 50px;
+    }
+
+    .league-name {
+        font-size: 0.7rem;
+    }
+
+    .controls-section {
+        padding: 12px;
+    }
+
+    .main-content {
+        padding: 10px;
     }
 }
 
