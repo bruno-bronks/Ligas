@@ -3,104 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Futebol Dashboard — Top-3 × Bottom-3</title>
+    <title>Análise das Ligas — Top-3 × Bottom-3</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <h2>⚙️ Controles</h2>
-            
-            <div class="form-group">
-                <label for="apiKey">API Key (football-data.org)</label>
-                <input type="password" id="apiKey" placeholder="Digite sua API key">
-                <small>Ou configure FOOTBALL_DATA_API_KEY no servidor</small>
-            </div>
-
-            <div class="form-group">
-                <label>
-                    <input type="checkbox" id="includeCL" checked>
-                    Incluir Champions League (CL)
-                </label>
-            </div>
-
-            <div class="form-group">
-                <label>Ligas para exibir</label>
-                <div class="leagues-grid" id="leaguesContainer">
-                    <label class="league-item">
-                        <input type="checkbox" value="BL1" checked>
-                        <img src="https://crests.football-data.org/BL1.svg" alt="Bundesliga" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <span class="league-emoji" style="display:none;">🇩🇪</span>
-                        <span class="league-name">Bundesliga</span>
-                    </label>
-                    <label class="league-item">
-                        <input type="checkbox" value="PL" checked>
-                        <img src="https://crests.football-data.org/PL.svg" alt="Premier League" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <span class="league-emoji" style="display:none;">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
-                        <span class="league-name">Premier League</span>
-                    </label>
-                    <label class="league-item">
-                        <input type="checkbox" value="FL1" checked>
-                        <img src="https://crests.football-data.org/FL1.svg" alt="Ligue 1" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <span class="league-emoji" style="display:none;">🇫🇷</span>
-                        <span class="league-name">Ligue 1</span>
-                    </label>
-                    <label class="league-item">
-                        <input type="checkbox" value="DED" checked>
-                        <img src="https://crests.football-data.org/DED.svg" alt="Eredivisie" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <span class="league-emoji" style="display:none;">🇳🇱</span>
-                        <span class="league-name">Eredivisie</span>
-                    </label>
-                    <label class="league-item">
-                        <input type="checkbox" value="BSA" checked>
-                        <img src="https://crests.football-data.org/BSA.svg" alt="Brasileirão" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <span class="league-emoji" style="display:none;">🇧🇷</span>
-                        <span class="league-name">Brasileirão A</span>
-                    </label>
-                    <label class="league-item">
-                        <input type="checkbox" value="PD" checked>
-                        <img src="https://crests.football-data.org/PD.svg" alt="La Liga" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <span class="league-emoji" style="display:none;">🇪🇸</span>
-                        <span class="league-name">La Liga</span>
-                    </label>
-                    <label class="league-item" id="clLeagueItem">
-                        <input type="checkbox" value="CL" checked>
-                        <img src="https://crests.football-data.org/CL.svg" alt="Champions League" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <span class="league-emoji" style="display:none;">🏆</span>
-                        <span class="league-name">Champions League</span>
-                    </label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="days">Dias à frente</label>
-                <input type="range" id="days" min="1" max="30" value="10">
-                <span id="daysValue">10</span>
-            </div>
-
-            <div class="form-group">
-                <label for="dateFrom">Data inicial (opcional)</label>
-                <input type="date" id="dateFrom">
-            </div>
-
-            <div class="form-group">
-                <label for="dateTo">Data final (opcional)</label>
-                <input type="date" id="dateTo">
-            </div>
-
-            <div class="form-group buttons">
-                <button id="refreshBtn" class="btn-primary">🔄 Atualizar</button>
-                <button id="clearCacheBtn" class="btn-secondary">🗑️ Limpar Cache</button>
-            </div>
-        </aside>
-
         <!-- Main Content -->
         <main class="main-content">
             <header>
-                <h1>⚽ Futebol Dashboard — Top‑3 × Bottom‑3</h1>
+                <h1>⚽ Análise das Ligas — Top‑3 × Bottom‑3</h1>
                 <p class="caption">Ligas: Bundesliga, Premier League, Ligue 1, Eredivisie, Brasileirão A, La Liga e Champions League. Probabilidades por Bradley‑Terry (heurístico).</p>
             </header>
+
+            <!-- Controles -->
+            <div class="controls-section">
+                <div class="controls-grid">
+                    <div class="form-group">
+                        <label for="apiKey">API Key (football-data.org)</label>
+                        <input type="password" id="apiKey" placeholder="Digite sua API key">
+                        <small>Ou configure FOOTBALL_DATA_API_KEY no servidor</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="includeCL" checked>
+                            Incluir Champions League (CL)
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="days">Dias à frente</label>
+                        <input type="range" id="days" min="1" max="30" value="10">
+                        <span id="daysValue">10</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dateFrom">Data inicial (opcional)</label>
+                        <input type="date" id="dateFrom">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dateTo">Data final (opcional)</label>
+                        <input type="date" id="dateTo">
+                    </div>
+
+                    <div class="form-group buttons">
+                        <button id="refreshBtn" class="btn-primary">🔄 Atualizar</button>
+                        <button id="clearCacheBtn" class="btn-secondary">🗑️ Limpar Cache</button>
+                    </div>
+                </div>
+
+                <div class="form-group leagues-section">
+                    <label>Ligas para exibir</label>
+                    <div class="leagues-grid" id="leaguesContainer">
+                        <label class="league-item">
+                            <input type="checkbox" value="BL1">
+                            <div class="league-icon-wrapper" data-league="BL1">
+                                <img src="https://media.api-sports.io/football/leagues/78.png" alt="Bundesliga" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <span class="league-icon-fallback" data-league="BL1">BL</span>
+                            </div>
+                            <span class="league-name">Bundesliga</span>
+                        </label>
+                        <label class="league-item">
+                            <input type="checkbox" value="PL">
+                            <div class="league-icon-wrapper" data-league="PL">
+                                <img src="https://media.api-sports.io/football/leagues/39.png" alt="Premier League" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <span class="league-icon-fallback" data-league="PL">PL</span>
+                            </div>
+                            <span class="league-name">Premier League</span>
+                        </label>
+                        <label class="league-item">
+                            <input type="checkbox" value="FL1">
+                            <div class="league-icon-wrapper" data-league="FL1">
+                                <img src="https://media.api-sports.io/football/leagues/61.png" alt="Ligue 1" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <span class="league-icon-fallback" data-league="FL1">FL1</span>
+                            </div>
+                            <span class="league-name">Ligue 1</span>
+                        </label>
+                        <label class="league-item">
+                            <input type="checkbox" value="DED">
+                            <div class="league-icon-wrapper" data-league="DED">
+                                <img src="https://media.api-sports.io/football/leagues/88.png" alt="Eredivisie" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <span class="league-icon-fallback" data-league="DED">ED</span>
+                            </div>
+                            <span class="league-name">Eredivisie</span>
+                        </label>
+                        <label class="league-item">
+                            <input type="checkbox" value="BSA">
+                            <div class="league-icon-wrapper" data-league="BSA">
+                                <img src="https://media.api-sports.io/football/leagues/71.png" alt="Brasileirão" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <span class="league-icon-fallback" data-league="BSA">BR</span>
+                            </div>
+                            <span class="league-name">Brasileirão A</span>
+                        </label>
+                        <label class="league-item">
+                            <input type="checkbox" value="PD">
+                            <div class="league-icon-wrapper" data-league="PD">
+                                <img src="https://media.api-sports.io/football/leagues/140.png" alt="La Liga" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <span class="league-icon-fallback" data-league="PD">ES</span>
+                            </div>
+                            <span class="league-name">La Liga</span>
+                        </label>
+                        <label class="league-item" id="clLeagueItem">
+                            <input type="checkbox" value="CL">
+                            <div class="league-icon-wrapper" data-league="CL">
+                                <img src="https://media.api-sports.io/football/leagues/2.png" alt="Champions League" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <span class="league-icon-fallback" data-league="CL">🏆</span>
+                            </div>
+                            <span class="league-name">Champions League</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
 
             <div id="loading" class="loading hidden">
                 <div class="spinner"></div>
