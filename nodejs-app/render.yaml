@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: football-ligas
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: FOOTBALL_DATA_API_KEY
+        sync: false
+      - key: PORT
+        value: 3000
+

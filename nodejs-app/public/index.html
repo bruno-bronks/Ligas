@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futebol Dashboard — Top-3 × Bottom-3</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>⚙️ Controles</h2>
+            
+            <div class="form-group">
+                <label for="apiKey">API Key (football-data.org)</label>
+                <input type="password" id="apiKey" placeholder="Digite sua API key">
+                <small>Ou configure FOOTBALL_DATA_API_KEY no servidor</small>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="includeCL" checked>
+                    Incluir Champions League (CL)
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="leagues">Ligas para exibir</label>
+                <select id="leagues" multiple size="7">
+                    <option value="BL1" selected>Alemanha - Bundesliga</option>
+                    <option value="PL" selected>Inglaterra - Premier League</option>
+                    <option value="FL1" selected>França - Ligue 1</option>
+                    <option value="DED" selected>Holanda - Eredivisie</option>
+                    <option value="BSA" selected>Brasil - Série A</option>
+                    <option value="PD" selected>Espanha - La Liga</option>
+                    <option value="CL">Champions League</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="days">Dias à frente</label>
+                <input type="range" id="days" min="1" max="30" value="10">
+                <span id="daysValue">10</span>
+            </div>
+
+            <div class="form-group">
+                <label for="dateFrom">Data inicial (opcional)</label>
+                <input type="date" id="dateFrom">
+            </div>
+
+            <div class="form-group">
+                <label for="dateTo">Data final (opcional)</label>
+                <input type="date" id="dateTo">
+            </div>
+
+            <div class="form-group buttons">
+                <button id="refreshBtn" class="btn-primary">🔄 Atualizar</button>
+                <button id="clearCacheBtn" class="btn-secondary">🗑️ Limpar Cache</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <h1>⚽ Futebol Dashboard — Top‑3 × Bottom‑3</h1>
+                <p class="caption">Ligas: Bundesliga, Premier League, Ligue 1, Eredivisie, Brasileirão A, La Liga e Champions League. Probabilidades por Bradley‑Terry (heurístico).</p>
+            </header>
+
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Carregando dados...</p>
+            </div>
+
+            <div id="error" class="error hidden"></div>
+
+            <div id="content"></div>
+
+            <footer class="footer-note">
+                <p>Probabilidades são heurísticas baseadas na classificação atual (PPG/GDG → z-score → Bradley‑Terry). Resultados reais podem divergir.</p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
