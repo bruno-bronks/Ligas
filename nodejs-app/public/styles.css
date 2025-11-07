@@ -93,8 +93,16 @@ body {
 
 .leagues-section {
     margin-top: 20px;
-    padding-top: 20px;
+    padding-top: 50px; /* Espaço extra para tooltips acima */
     border-top: 1px solid var(--border-color);
+    overflow: visible !important; /* Permitir tooltips acima */
+    position: relative;
+}
+
+.form-group.leagues-section {
+    overflow: visible !important;
+    position: relative;
+    padding-top: 50px !important; /* Espaço extra para tooltips */
 }
 
 .leagues-section .form-group {
@@ -157,7 +165,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 2px;
-    padding: 2px 1px;
+    padding: 40px 1px 2px 1px; /* Padding-top para espaço dos tooltips */
     background-color: transparent;
     border: none;
     border-radius: 6px;
@@ -169,6 +177,7 @@ body {
     flex: 1 1 calc(8.33% - 2px);
     min-width: 45px;
     max-width: none;
+    overflow: visible; /* Permitir tooltips */
 }
 
 .league-item:hover .league-icon-wrapper {
@@ -218,14 +227,14 @@ body {
     cursor: pointer;
 }
 
-/* Tooltip - Aparece abaixo para não ser cortado */
+/* Tooltip - Aparece ACIMA para não ser cortado */
 .league-icon-wrapper::after {
     content: attr(data-tooltip);
     position: absolute;
-    top: 100%;
+    bottom: 100%; /* Posicionar acima do elemento */
     left: 50%;
-    transform: translateX(-50%) translateY(8px);
-    background: rgba(0, 0, 0, 0.9);
+    transform: translateX(-50%) translateY(-8px);
+    background: rgba(0, 0, 0, 0.95);
     color: #ffffff;
     padding: 6px 10px;
     border-radius: 6px;
@@ -234,24 +243,24 @@ body {
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease, transform 0.3s ease;
-    z-index: 10000;
+    z-index: 99999; /* Z-index muito alto para aparecer acima de tudo */
     font-weight: 500;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    margin-top: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    margin-bottom: 5px;
 }
 
 .league-icon-wrapper::before {
     content: '';
     position: absolute;
-    top: 100%;
+    bottom: 100%; /* Posicionar acima do elemento */
     left: 50%;
-    transform: translateX(-50%) translateY(2px);
+    transform: translateX(-50%) translateY(3px);
     border: 5px solid transparent;
-    border-bottom-color: rgba(0, 0, 0, 0.9);
+    border-top-color: rgba(0, 0, 0, 0.95); /* Seta apontando para baixo */
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease, transform 0.3s ease;
-    z-index: 10001;
+    z-index: 100000; /* Z-index ainda mais alto */
 }
 
 .league-icon-wrapper:hover::after,
@@ -310,12 +319,18 @@ body {
 }
 
 .league-name {
-    display: none; /* Esconder nome abaixo dos logotipos */
+    display: none !important; /* Esconder nome abaixo dos logotipos */
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
 }
 
 .league-item input[type="checkbox"]:checked ~ .league-name {
-    color: #ffd700;
-    font-weight: 600;
+    display: none !important;
+    visibility: hidden !important;
 }
 
 .league-item input[type="checkbox"]:checked {
