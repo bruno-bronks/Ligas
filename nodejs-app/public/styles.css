@@ -359,8 +359,8 @@ body {
 
 .buttons {
     display: flex;
-    gap: 4px;
-    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 10px;
 }
 
 .btn-primary,
