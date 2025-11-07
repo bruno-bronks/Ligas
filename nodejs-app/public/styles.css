@@ -41,10 +41,10 @@ body {
 /* Controls Section */
 .controls-section {
     background: #000000;
-    padding: 10px 10px;
+    padding: 0px 10px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     box-shadow: var(--card-shadow);
     color: #ffffff;
     overflow: visible; /* Permitir tooltips */
