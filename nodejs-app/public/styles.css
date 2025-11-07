@@ -285,12 +285,20 @@ body {
     padding: 3px;
     display: block;
     transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
+    filter: grayscale(1) brightness(0.75);
+    opacity: 0.75;
+}
+
+.league-item:hover .league-logo,
+.league-item input[type="checkbox"]:checked ~ .league-icon-wrapper .league-logo {
+    transform: scale(1.1);
     filter: none;
     opacity: 1;
 }
 
-.league-item:hover .league-logo {
-    transform: scale(1.1);
+.league-item input[type="checkbox"]:not(:checked) ~ .league-icon-wrapper .league-logo {
+    opacity: 0.6;
+    filter: grayscale(1) brightness(0.75);
 }
 
 .league-icon-fallback {
@@ -316,16 +324,6 @@ body {
     filter: none;
     border-color: #ffd700;
     background: rgba(255, 255, 255, 0.12);
-}
-
-.league-item input[type="checkbox"]:checked ~ .league-icon-wrapper .league-logo {
-    opacity: 1;
-    filter: none;
-}
-
-.league-item input[type="checkbox"]:not(:checked) ~ .league-icon-wrapper .league-logo {
-    opacity: 0.6;
-    filter: none;
 }
 
 .league-name {
