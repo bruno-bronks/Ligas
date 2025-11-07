@@ -366,14 +366,14 @@ body {
 .btn-primary,
 .btn-secondary {
     flex: 0 0 auto;
-    padding: 2px 8px;
+    padding: 1px 8px;
     min-width: 90px;
     border: none;
-    border-radius: 4px;
+    border-radius: 3px;
     cursor: pointer;
-    font-size: 0.58rem;
+    font-size: 0.5rem;
     font-weight: 600;
-    line-height: 1.1;
+    line-height: 1;
     transition: opacity 0.2s;
 }
 
