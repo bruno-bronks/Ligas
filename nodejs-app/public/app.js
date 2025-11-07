@@ -6,11 +6,11 @@ const BASE_LEAGUES = {
     'DED': 'Holanda - Eredivisie',
     'BSA': 'Brasil - Série A',
     'PD': 'Espanha - La Liga',
-    'RPL': 'Rússia - Premier League',
+    'RFPL': 'Rússia - Premier League',
     'UPL': 'Ucrânia - Premier League',
-    'SAL': 'Arábia Saudita - Pro League',
-    'TR1': 'Turquia - Süper Lig',
-    'CSL': 'China - Super League',
+    'SA': 'Arábia Saudita - Pro League',
+    'TUR': 'Turquia - Süper Lig',
+    'CL1': 'China - Super League',
     'CL': 'Champions League'
 };
 
