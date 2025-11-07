@@ -366,15 +366,15 @@ body {
 .btn-primary,
 .btn-secondary {
     flex: 0 0 auto;
-    padding: 1px 9px;
-    min-width: 86px;
+    padding: 2px 11px;
+    min-width: 104px;
     border: none;
-    border-radius: 3px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 0.5rem;
+    font-size: 0.6rem;
     font-weight: 600;
-    line-height: 1.05;
-    height: 20px;
+    line-height: 1.1;
+    height: 24px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
