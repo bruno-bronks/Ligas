@@ -140,6 +140,7 @@ body {
     margin-top: 8px;
     flex-wrap: nowrap;
     overflow-x: auto;
+    overflow-y: visible; /* Permitir tooltips acima */
 }
 
 .leagues-grid::-webkit-scrollbar {
@@ -226,13 +227,13 @@ body {
     cursor: pointer;
 }
 
-/* Tooltip */
+/* Tooltip - Aparece abaixo para não ser cortado */
 .league-icon-wrapper::after {
     content: attr(data-tooltip);
     position: absolute;
-    bottom: 100%;
+    top: 100%;
     left: 50%;
-    transform: translateX(-50%) translateY(-8px);
+    transform: translateX(-50%) translateY(8px);
     background: rgba(0, 0, 0, 0.9);
     color: #ffffff;
     padding: 6px 10px;
@@ -242,23 +243,24 @@ body {
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease, transform 0.3s ease;
-    z-index: 1000;
+    z-index: 10000;
     font-weight: 500;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    margin-top: 5px;
 }
 
 .league-icon-wrapper::before {
     content: '';
     position: absolute;
-    bottom: 100%;
+    top: 100%;
     left: 50%;
-    transform: translateX(-50%) translateY(-2px);
+    transform: translateX(-50%) translateY(2px);
     border: 5px solid transparent;
-    border-top-color: rgba(0, 0, 0, 0.9);
+    border-bottom-color: rgba(0, 0, 0, 0.9);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease, transform 0.3s ease;
-    z-index: 1001;
+    z-index: 10001;
 }
 
 .league-icon-wrapper:hover::after,
