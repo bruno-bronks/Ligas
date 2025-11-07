@@ -359,17 +359,17 @@ body {
 
 .buttons {
     display: flex;
-    gap: 6px;
+    gap: 4px;
 }
 
 .btn-primary,
 .btn-secondary {
     flex: 1;
-    padding: 7px 10px;
+    padding: 4px 6px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 0.65rem;
     font-weight: 600;
     transition: opacity 0.2s;
 }
