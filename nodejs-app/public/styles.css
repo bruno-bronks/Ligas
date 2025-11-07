@@ -113,6 +113,10 @@ body {
     padding-top: 50px !important; /* Espaço extra para tooltips */
 }
 
+.form-group.leagues-section label {
+    color: #ffffff;
+}
+
 .leagues-section .form-group {
     margin-bottom: 0;
 }
@@ -155,11 +159,13 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     gap: 2px;
-    padding: 3px 2px;
+    padding: 10px 5px;
     margin-top: 8px;
     flex-wrap: nowrap;
     overflow-x: hidden;
     overflow-y: visible; /* Permitir tooltips acima */
+    background: #ffffff;
+    border-radius: 8px;
 }
 
 .leagues-grid::-webkit-scrollbar {
