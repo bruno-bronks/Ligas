@@ -135,7 +135,7 @@ body {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 8px;
+    gap: 15px;
     padding: 5px;
     margin-top: 8px;
     flex-wrap: nowrap;
@@ -720,7 +720,7 @@ table tr:last-child td {
 
     .leagues-grid {
         justify-content: center;
-        gap: 8px;
+        gap: 12px;
     }
 
     .league-item {
