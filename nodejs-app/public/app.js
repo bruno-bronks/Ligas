@@ -488,6 +488,7 @@ function renderCompetitionsList(data) {
             <th>Tipo</th>
             <th>País/Área</th>
             <th>Plano</th>
+            <th>Disponível em</th>
             <th>Nota</th>
         </tr>
     `;
@@ -509,12 +510,17 @@ function renderCompetitionsList(data) {
             ? `<span class="position-badge ${comp.plan === 'TIER_ONE' ? 'top3' : comp.plan === 'TIER_TWO' ? 'bottom3' : ''}">${comp.plan}</span>`
             : '-';
         
+        const availableIn = comp.availableIn && comp.availableIn.length > 0 
+            ? comp.availableIn.join(', ')
+            : '-';
+        
         tr.innerHTML = `
             <td><strong>${comp.code || '-'}</strong></td>
             <td>${comp.name || '-'}</td>
             <td>${comp.type || '-'}</td>
             <td>${comp.area ? `${comp.area.name} (${comp.area.code})` : '-'}</td>
             <td>${planBadge}</td>
+            <td>${availableIn}</td>
             <td>${comp.note || '-'}</td>
         `;
         tbody.appendChild(tr);

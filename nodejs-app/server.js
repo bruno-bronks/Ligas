@@ -4,9 +4,12 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
+// Importar gerenciador de APIs
+const apiManager = require('./apis/manager');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
-const API_BASE = 'https://api.football-data.org/v4';
+const API_BASE = 'https://api.football-data.org/v4'; // Mantido para compatibilidade
 
 // Middleware
 app.use(cors());
@@ -116,98 +119,126 @@ async function requestWithRetry(url, token, params = null, maxRetries = 4, backo
   throw lastError || new Error('Falha após múltiplas tentativas de requisição');
 }
 
-// Obter standings
+// Obter standings usando sistema de múltiplas APIs
 async function getTotalStanding(token, leagueCode) {
-  const url = `${API_BASE}/competitions/${leagueCode}/standings`;
-  const data = await requestWithRetry(url, token);
-  
-  const standings = data.standings || [];
-  const tables = standings.filter(s => s.table).sort((a, b) => {
-    if (a.type === 'TOTAL') return -1;
-    if (b.type === 'TOTAL') return 1;
-    return 0;
-  });
-
-  const rows = [];
-  for (const block of tables) {
-    for (const row of block.table || []) {
-      const team = row.team || {};
-      rows.push({
-        position: row.position,
-        team_id: team.id,
-        team: team.name,
-        tla: team.tla,
-        played: row.playedGames,
-        won: row.won,
-        draw: row.draw,
-        lost: row.lost,
-        gf: row.goalsFor,
-        ga: row.goalsAgainst,
-        gd: row.goalDifference,
-        points: row.points,
-        form: row.form
+  try {
+    const result = await apiManager.getStandings(token, leagueCode);
+    let rows = result.data;
+    
+    // Para Champions League, criar ranking global
+    if (leagueCode === 'CL' && rows.length > 0) {
+      rows.sort((a, b) => {
+        if (b.points !== a.points) return b.points - a.points;
+        if (b.gd !== a.gd) return b.gd - a.gd;
+        if (b.gf !== a.gf) return b.gf - a.gf;
+        return a.team.localeCompare(b.team);
+      });
+      rows.forEach((row, idx) => {
+        row.position = idx + 1;
       });
     }
-  }
 
-  // Para Champions League, criar ranking global
-  if (leagueCode === 'CL' && rows.length > 0) {
-    rows.sort((a, b) => {
-      if (b.points !== a.points) return b.points - a.points;
-      if (b.gd !== a.gd) return b.gd - a.gd;
-      if (b.gf !== a.gf) return b.gf - a.gf;
-      return a.team.localeCompare(b.team);
+    return rows;
+  } catch (error) {
+    // Fallback para método antigo se o novo sistema falhar completamente
+    console.warn(`[Fallback] Usando método antigo para ${leagueCode}:`, error.message);
+    const url = `${API_BASE}/competitions/${leagueCode}/standings`;
+    const data = await requestWithRetry(url, token);
+    
+    const standings = data.standings || [];
+    const tables = standings.filter(s => s.table).sort((a, b) => {
+      if (a.type === 'TOTAL') return -1;
+      if (b.type === 'TOTAL') return 1;
+      return 0;
     });
-    rows.forEach((row, idx) => {
-      row.position = idx + 1;
-    });
-  }
 
-  return rows;
+    const rows = [];
+    for (const block of tables) {
+      for (const row of block.table || []) {
+        const team = row.team || {};
+        rows.push({
+          position: row.position,
+          team_id: team.id,
+          team: team.name,
+          tla: team.tla,
+          played: row.playedGames,
+          won: row.won,
+          draw: row.draw,
+          lost: row.lost,
+          gf: row.goalsFor,
+          ga: row.goalsAgainst,
+          gd: row.goalDifference,
+          points: row.points,
+          form: row.form
+        });
+      }
+    }
+
+    if (leagueCode === 'CL' && rows.length > 0) {
+      rows.sort((a, b) => {
+        if (b.points !== a.points) return b.points - a.points;
+        if (b.gd !== a.gd) return b.gd - a.gd;
+        if (b.gf !== a.gf) return b.gf - a.gf;
+        return a.team.localeCompare(b.team);
+      });
+      rows.forEach((row, idx) => {
+        row.position = idx + 1;
+      });
+    }
+
+    return rows;
+  }
 }
 
-// Obter próximos jogos
+// Obter próximos jogos usando sistema de múltiplas APIs
 async function getUpcomingMatches(token, leagueCode, dateFrom = null, dateTo = null, daysAhead = 10) {
-  const url = `${API_BASE}/competitions/${leagueCode}/matches`;
-  
-  let fromDate = dateFrom;
-  let toDate = dateTo;
-  
-  if (!fromDate || !toDate) {
-    const today = new Date();
-    today.setUTCHours(0, 0, 0, 0);
-    fromDate = fromDate || today.toISOString().split('T')[0];
-    toDate = toDate || new Date(today.getTime() + daysAhead * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  try {
+    const result = await apiManager.getUpcomingMatches(token, leagueCode, dateFrom, dateTo, daysAhead);
+    return result.data;
+  } catch (error) {
+    // Fallback para método antigo se o novo sistema falhar completamente
+    console.warn(`[Fallback] Usando método antigo para ${leagueCode}:`, error.message);
+    const url = `${API_BASE}/competitions/${leagueCode}/matches`;
+    
+    let fromDate = dateFrom;
+    let toDate = dateTo;
+    
+    if (!fromDate || !toDate) {
+      const today = new Date();
+      today.setUTCHours(0, 0, 0, 0);
+      fromDate = fromDate || today.toISOString().split('T')[0];
+      toDate = toDate || new Date(today.getTime() + daysAhead * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    }
+
+    const params = {
+      status: 'SCHEDULED,TIMED',
+      dateFrom: fromDate,
+      dateTo: toDate
+    };
+
+    const data = await requestWithRetry(url, token, params);
+    
+    const rows = [];
+    for (const match of data.matches || []) {
+      const home = match.homeTeam || {};
+      const away = match.awayTeam || {};
+      rows.push({
+        match_id: match.id,
+        utcDate: match.utcDate,
+        status: match.status,
+        matchday: match.matchday,
+        home_id: home.id,
+        home: home.name,
+        home_tla: home.tla,
+        away_id: away.id,
+        away: away.name,
+        away_tla: away.tla,
+        venue: match.venue
+      });
+    }
+
+    return rows;
   }
-
-  const params = {
-    status: 'SCHEDULED,TIMED',
-    dateFrom: fromDate,
-    dateTo: toDate
-  };
-
-  const data = await requestWithRetry(url, token, params);
-  
-  const rows = [];
-  for (const match of data.matches || []) {
-    const home = match.homeTeam || {};
-    const away = match.awayTeam || {};
-    rows.push({
-      match_id: match.id,
-      utcDate: match.utcDate,
-      status: match.status,
-      matchday: match.matchday,
-      home_id: home.id,
-      home: home.name,
-      home_tla: home.tla,
-      away_id: away.id,
-      away: away.name,
-      away_tla: away.tla,
-      venue: match.venue
-    });
-  }
-
-  return rows;
 }
 
 // Calcular forças das equipes
@@ -413,20 +444,54 @@ const AVAILABLE_COMPETITIONS = [
   { code: 'CL1', name: 'Chinese Super League', type: 'LEAGUE', area: { name: 'China', code: 'CN' }, plan: 'TIER_TWO', note: 'Verificar disponibilidade' },
 ];
 
-// Listar competições disponíveis (lista hardcoded pois endpoint não está disponível no plano gratuito)
+// Listar competições disponíveis (usando sistema de múltiplas APIs)
 app.get('/api/list-competitions', (req, res) => {
   try {
-    // Retornar lista hardcoded de competições conhecidas
-    // Nota: O endpoint /competitions da API não está disponível no plano gratuito
-    // Não precisa de API key pois não faz chamadas à API
-    const competitions = AVAILABLE_COMPETITIONS.map(comp => ({
-      code: comp.code,
-      name: comp.name,
-      type: comp.type,
-      plan: comp.plan,
-      area: comp.area,
-      note: comp.note || null
-    }));
+    // Obter ligas de todas as APIs configuradas
+    const allLeagues = apiManager.getAllAvailableLeagues();
+    
+    // Combinar com lista hardcoded
+    const hardcodedMap = new Map();
+    AVAILABLE_COMPETITIONS.forEach(comp => {
+      hardcodedMap.set(comp.code, comp);
+    });
+
+    // Criar lista combinada
+    const competitions = [];
+    const seen = new Set();
+
+    // Adicionar ligas do sistema de APIs
+    allLeagues.forEach(league => {
+      if (!seen.has(league.code)) {
+        const hardcoded = hardcodedMap.get(league.code);
+        competitions.push({
+          code: league.code,
+          name: league.name,
+          type: hardcoded?.type || 'LEAGUE',
+          plan: hardcoded?.plan || 'UNKNOWN',
+          area: hardcoded?.area || null,
+          note: hardcoded?.note || null,
+          availableIn: league.apis
+        });
+        seen.add(league.code);
+      }
+    });
+
+    // Adicionar ligas hardcoded que não estão no sistema de APIs
+    AVAILABLE_COMPETITIONS.forEach(comp => {
+      if (!seen.has(comp.code)) {
+        competitions.push({
+          code: comp.code,
+          name: comp.name,
+          type: comp.type,
+          plan: comp.plan,
+          area: comp.area,
+          note: comp.note || null,
+          availableIn: []
+        });
+        seen.add(comp.code);
+      }
+    });
 
     // Ordenar por nome
     competitions.sort((a, b) => a.name.localeCompare(b.name));
@@ -434,7 +499,7 @@ app.get('/api/list-competitions', (req, res) => {
     res.json({
       total: competitions.length,
       competitions,
-      note: 'Lista baseada na documentação da API. Algumas competições podem não estar disponíveis no seu plano. Teste individualmente para confirmar.'
+      note: 'Lista combinada de todas as APIs configuradas. Algumas competições podem não estar disponíveis no seu plano. Teste individualmente para confirmar.'
     });
   } catch (error) {
     console.error('Erro ao listar competições:', error);
