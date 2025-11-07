@@ -366,14 +366,18 @@ body {
 .btn-primary,
 .btn-secondary {
     flex: 0 0 auto;
-    padding: 1px 8px;
-    min-width: 90px;
+    padding: 0 8px;
+    min-width: 78px;
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    font-size: 0.5rem;
+    font-size: 0.45rem;
     font-weight: 600;
     line-height: 1;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     transition: opacity 0.2s;
 }
 
