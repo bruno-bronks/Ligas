@@ -10,6 +10,7 @@ const apiManager = require('./apis/manager');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const API_BASE = 'https://api.football-data.org/v4'; // Mantido para compatibilidade
+const FOOTBALL_DATA_API_KEY = process.env.FOOTBALL_DATA_API_KEY || '';
 
 // Middleware
 app.use(cors());
@@ -388,15 +389,15 @@ app.get('/', (req, res) => {
 // API: Obter dados da liga
 app.post('/api/league-data', async (req, res) => {
   try {
-    const { token, leagueCode, dateFrom, dateTo, daysAhead } = req.body;
+    const { leagueCode, dateFrom, dateTo, daysAhead } = req.body;
 
-    if (!token) {
-      return res.status(400).json({ error: 'API token é obrigatório' });
+    if (!FOOTBALL_DATA_API_KEY) {
+      return res.status(500).json({ error: 'API key não configurada no servidor. Configure FOOTBALL_DATA_API_KEY.' });
     }
 
-    const standings = await getTotalStanding(token, leagueCode);
+    const standings = await getTotalStanding(FOOTBALL_DATA_API_KEY, leagueCode);
     const strengths = calculateLeagueStrengths(standings);
-    const fixtures = await getUpcomingMatches(token, leagueCode, dateFrom, dateTo, daysAhead);
+    const fixtures = await getUpcomingMatches(FOOTBALL_DATA_API_KEY, leagueCode, dateFrom, dateTo, daysAhead);
     const probabilities = calculateMatchProbabilities(fixtures, strengths);
 
     res.json({

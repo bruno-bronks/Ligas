@@ -15,7 +15,6 @@ const BASE_LEAGUES = {
 };
 
 // Elementos DOM
-const apiKeyInput = document.getElementById('apiKey');
 const includeCLCheckbox = document.getElementById('includeCL');
 const leaguesContainer = document.getElementById('leaguesContainer');
 const daysSlider = document.getElementById('days');
@@ -50,13 +49,6 @@ clearCacheBtn.addEventListener('click', async () => {
 
 // Carregar dados
 async function loadData() {
-    const apiKey = apiKeyInput.value.trim();
-    
-    if (!apiKey) {
-        showError('Por favor, informe a API Key');
-        return;
-    }
-
     const selectedLeagues = Array.from(leaguesContainer.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value);
     
     if (selectedLeagues.length === 0) {
@@ -77,7 +69,7 @@ async function loadData() {
 
     for (const leagueCode of selectedLeagues) {
         try {
-            await loadLeagueData(apiKey, leagueCode, dateFrom, dateTo, days);
+            await loadLeagueData(leagueCode, dateFrom, dateTo, days);
         } catch (error) {
             console.error(`Erro ao carregar ${leagueCode}:`, error);
             showError(`Erro ao carregar ${BASE_LEAGUES[leagueCode]}: ${error.message}`);
@@ -87,7 +79,7 @@ async function loadData() {
     hideLoading();
 }
 
-async function loadLeagueData(token, leagueCode, dateFrom, dateTo, daysAhead) {
+async function loadLeagueData(leagueCode, dateFrom, dateTo, daysAhead) {
     try {
         const response = await fetch('/api/league-data', {
             method: 'POST',
@@ -95,7 +87,6 @@ async function loadLeagueData(token, leagueCode, dateFrom, dateTo, daysAhead) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                token,
                 leagueCode,
                 dateFrom,
                 dateTo,
