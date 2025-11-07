@@ -99,17 +99,268 @@ body {
     margin-bottom: 0;
 }
 
-.controls-grid .form-group.buttons {
+.leagues-section {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: visible;
+}
+
+.leagues-title {
+    color: #000000;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin: 0 6px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="date"],
+.form-group select {
+    width: 100%;
+    padding: 5px 8px;
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-size: 0.8rem;
+}
+
+.form-group input[type="range"] {
+    width: 100%;
+    height: 5px;
+}
+
+.form-group select[multiple] {
+    height: 130px;
+}
+
+/* Leagues Grid */
+.leagues-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 12px 8px;
+    margin-top: 0;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+    overflow-y: visible; /* Permitir tooltips acima */
+    background: transparent;
+    border-radius: 12px;
+    border: none;
+    box-shadow: none;
+}
+
+.leagues-grid::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera - esconder scrollbar */
+}
+
+/* Scrollbar escondida mas scroll ainda funciona */
+
+.league-item {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 8px;
+    justify-content: center;
+    gap: 6px;
+    padding: 56px 4px 8px 4px; /* Espaço extra para tooltips */
+    background-color: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    position: relative;
+    flex-direction: column;
+    flex: 1 1 calc(8.33% - 6px);
+    min-width: 84px;
+    max-width: none;
+    overflow: visible; /* Permitir tooltips */
+}
+
+.league-item:hover .league-icon-wrapper {
+    transform: scale(1.2);
+    border-color: rgba(255, 255, 255, 0.45);
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.25);
+}
+
+.league-item input[type="checkbox"]:checked ~ .league-name {
+    position: relative;
+}
+
+.league-item input[type="checkbox"]:checked ~ .league-name::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background-color: var(--secondary-color);
+    border-radius: 0 2px 2px 0;
+}
+
+.league-item input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
     margin: 0;
+    pointer-events: none;
+}
+
+.league-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    background: transparent;
+    border-radius: 12px;
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    overflow: visible;
+    position: relative;
+    cursor: pointer;
+}
+
+/* Tooltip - Aparece ACIMA para não ser cortado */
+.league-icon-wrapper::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%; /* Posicionar acima do elemento */
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background: rgba(0, 0, 0, 0.95);
+    color: #ffffff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 99999; /* Z-index muito alto para aparecer acima de tudo */
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    margin-bottom: 5px;
+}
+
+.league-icon-wrapper::before {
+    content: '';
+    position: absolute;
+    bottom: 100%; /* Posicionar acima do elemento */
+    left: 50%;
+    transform: translateX(-50%) translateY(3px);
+    border: 5px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.95); /* Seta apontando para baixo */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 100000; /* Z-index ainda mais alto */
+}
+
+.league-icon-wrapper:hover::after,
+.league-icon-wrapper:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.league-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 8px;
+    display: block;
+    transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
+    filter: grayscale(1) brightness(0.75);
+    opacity: 0.75;
+}
+
+.league-item:hover .league-logo,
+.league-item input[type="checkbox"]:checked ~ .league-icon-wrapper .league-logo {
+    transform: scale(1.1);
+    filter: none;
+    opacity: 1;
+}
+
+.league-item input[type="checkbox"]:not(:checked) ~ .league-icon-wrapper .league-logo {
+    opacity: 0.6;
+    filter: grayscale(1) brightness(0.75);
+}
+
+.league-icon-fallback {
+    font-size: 14px;
+    font-weight: 700;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.league-icon-fallback[data-league="CL"] {
+    font-size: 24px;
+}
+
+.league-item input[type="checkbox"]:checked ~ .league-icon-wrapper {
+    box-shadow: 0 0 22px rgba(255, 215, 0, 0.4);
+    transform: scale(1.05);
+    filter: none;
+    border-color: #ffd700;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.league-name {
+    display: none !important; /* Esconder nome abaixo dos logotipos */
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+}
+
+.league-item input[type="checkbox"]:checked ~ .league-name {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.league-item input[type="checkbox"]:checked {
+    accent-color: var(--secondary-color);
+}
+
+.form-group small {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.form-group input[type="checkbox"] {
+    margin-right: 8px;
 }
 
 .buttons {
     display: flex;
-    gap: 8px;
+    gap: 4px;
+    justify-content: flex-end;
 }
 
 .btn-primary,
