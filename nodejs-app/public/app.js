@@ -70,9 +70,32 @@ listCompetitionsBtn.addEventListener('click', async () => {
             body: JSON.stringify({ token: apiKey })
         });
 
+        // Verificar Content-Type antes de fazer parse
+        const contentType = response.headers.get('content-type') || '';
+        
         if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.error || 'Erro ao buscar competições');
+            let errorMessage = 'Erro ao buscar competições';
+            try {
+                if (contentType.includes('application/json')) {
+                    const error = await response.json();
+                    errorMessage = error.error || errorMessage;
+                } else {
+                    // Se não for JSON, pode ser HTML ou texto
+                    const text = await response.text();
+                    if (text.includes('<!DOCTYPE') || text.includes('<html')) {
+                        errorMessage = `HTTP ${response.status}: A API retornou uma página de erro. Verifique sua API key.`;
+                    } else {
+                        errorMessage = `HTTP ${response.status}: ${text.substring(0, 200)}`;
+                    }
+                }
+            } catch (parseError) {
+                errorMessage = `HTTP ${response.status}: Erro ao processar resposta do servidor`;
+            }
+            throw new Error(errorMessage);
+        }
+
+        if (!contentType.includes('application/json')) {
+            throw new Error('Resposta do servidor não é JSON válido');
         }
 
         const data = await response.json();

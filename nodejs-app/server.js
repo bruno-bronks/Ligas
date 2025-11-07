@@ -72,7 +72,14 @@ async function requestWithRetry(url, token, params = null, maxRetries = 4, backo
       }
 
       if (response.status >= 400) {
-        lastError = new Error(`HTTP ${response.status}: ${response.data?.message || 'Error'}`);
+        // Verificar se a resposta é HTML (página de erro)
+        const contentType = response.headers['content-type'] || '';
+        if (contentType.includes('text/html')) {
+          lastError = new Error(`HTTP ${response.status}: A API retornou uma página de erro HTML. Verifique sua API key e o endpoint.`);
+        } else {
+          const errorMsg = response.data?.message || response.data?.error || 'Error';
+          lastError = new Error(`HTTP ${response.status}: ${errorMsg}`);
+        }
         await new Promise(resolve => setTimeout(resolve, Math.pow(backoff, i + 1) * 1000));
         continue;
       }
@@ -82,13 +89,27 @@ async function requestWithRetry(url, token, params = null, maxRetries = 4, backo
       return data;
     } catch (error) {
       lastError = error;
-      if (error.response?.status === 429) {
-        const retryAfter = error.response.headers['retry-after'];
-        const waitTime = retryAfter ? parseFloat(retryAfter) : Math.pow(backoff, i + 1);
-        await new Promise(resolve => setTimeout(resolve, waitTime * 1000));
-        continue;
+      
+      // Verificar se a resposta é HTML (página de erro)
+      if (error.response) {
+        const contentType = error.response.headers['content-type'] || '';
+        if (contentType.includes('text/html')) {
+          lastError = new Error(`HTTP ${error.response.status}: A API retornou uma página de erro HTML. Verifique sua API key e o endpoint.`);
+        } else if (error.response.status === 429) {
+          const retryAfter = error.response.headers['retry-after'];
+          const waitTime = retryAfter ? parseFloat(retryAfter) : Math.pow(backoff, i + 1);
+          await new Promise(resolve => setTimeout(resolve, waitTime * 1000));
+          continue;
+        } else if (error.response.status >= 400) {
+          const errorMsg = error.response.data?.message || error.response.data?.error || `HTTP ${error.response.status}`;
+          lastError = new Error(errorMsg);
+        }
       }
-      await new Promise(resolve => setTimeout(resolve, Math.pow(backoff, i + 1) * 1000));
+      
+      // Se não for erro 429, aguardar antes de tentar novamente
+      if (error.response?.status !== 429) {
+        await new Promise(resolve => setTimeout(resolve, Math.pow(backoff, i + 1) * 1000));
+      }
     }
   }
 
