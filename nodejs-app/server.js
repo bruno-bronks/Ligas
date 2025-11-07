@@ -281,8 +281,8 @@ function calculateMatchProbabilities(fixtures, strengths) {
 
     const probs = calculateBTProbabilities(home.rating, away.rating);
     const isTopVsBottom = 
-      (home.position <= 3 && away.position >= bottomCut) ||
-      (away.position <= 3 && home.position >= bottomCut);
+      (home.position <= 4 && away.position >= bottomCut) ||
+      (away.position <= 4 && home.position >= bottomCut);
 
     results.push({
       utcDate: fixture.utcDate,
@@ -294,7 +294,7 @@ function calculateMatchProbabilities(fixtures, strengths) {
       'P(Home)': Math.round(probs.pHome * 1000) / 1000,
       'P(Draw)': Math.round(probs.pDraw * 1000) / 1000,
       'P(Away)': Math.round(probs.pAway * 1000) / 1000,
-      ALERTA: isTopVsBottom ? '⚠️ Top-3 × Bottom-3' : ''
+      ALERTA: isTopVsBottom ? '⚠️ Top-4 × Bottom-3' : ''
     });
   }
 

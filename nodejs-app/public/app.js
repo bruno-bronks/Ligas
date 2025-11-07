@@ -216,8 +216,8 @@ function createStandingsTable(standings) {
     standings.forEach(team => {
         const tr = document.createElement('tr');
         
-        // Adicionar classes para top-3 e bottom-3
-        if (team.position <= 3) {
+        // Adicionar classes para top-4 e bottom-3
+        if (team.position <= 4) {
             tr.classList.add('top3');
         } else if (team.position >= bottomCut) {
             tr.classList.add('bottom3');
@@ -228,8 +228,8 @@ function createStandingsTable(standings) {
             ? `<img src="${crestUrl}" alt="${team.team}" class="team-crest" onerror="this.style.display='none'">`
             : '';
 
-        const positionBadge = team.position <= 3 || team.position >= bottomCut
-            ? `<span class="position-badge ${team.position <= 3 ? 'top3' : 'bottom3'}">${team.position}</span>`
+        const positionBadge = team.position <= 4 || team.position >= bottomCut
+            ? `<span class="position-badge ${team.position <= 4 ? 'top3' : 'bottom3'}">${team.position}</span>`
             : team.position;
 
         tr.innerHTML = `
@@ -325,7 +325,7 @@ function createProbabilitiesTable(probabilities, standings = []) {
     probabilities.forEach(match => {
         const tr = document.createElement('tr');
         
-        // Destacar se for Top-3 vs Bottom-3
+        // Destacar se for Top-4 vs Bottom-3
         if (match.ALERTA) {
             tr.classList.add('top3');
         }
@@ -350,13 +350,13 @@ function createProbabilitiesTable(probabilities, standings = []) {
         const maxPos = standings.length > 0 ? Math.max(...standings.map(s => s.position)) : 0;
         const bottomCut = maxPos - 2;
 
-        const homePosBadge = match.home_pos <= 3 
+        const homePosBadge = match.home_pos <= 4 
             ? `<span class="position-badge top3">${match.home_pos}</span>`
             : match.home_pos >= bottomCut && maxPos > 0
             ? `<span class="position-badge bottom3">${match.home_pos}</span>`
             : match.home_pos;
 
-        const awayPosBadge = match.away_pos <= 3 
+        const awayPosBadge = match.away_pos <= 4 
             ? `<span class="position-badge top3">${match.away_pos}</span>`
             : match.away_pos >= bottomCut && maxPos > 0
             ? `<span class="position-badge bottom3">${match.away_pos}</span>`
