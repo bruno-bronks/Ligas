@@ -41,10 +41,10 @@ body {
 /* Controls Section */
 .controls-section {
     background: #000000;
-    padding: 15px 8px;
+    padding: 12px 12px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
-    margin-bottom: 30px;
+    margin-bottom: 22px;
     box-shadow: var(--card-shadow);
     color: #ffffff;
     overflow: visible; /* Permitir tooltips */
@@ -120,8 +120,8 @@ body {
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
-    font-size: 0.9rem;
+    margin-bottom: 6px;
+    font-size: 0.85rem;
     color: var(--text-secondary);
 }
 
@@ -130,16 +130,17 @@ body {
 .form-group input[type="date"],
 .form-group select {
     width: 100%;
-    padding: 8px 12px;
+    padding: 6px 10px;
     background-color: var(--bg-dark);
     border: 1px solid var(--border-color);
     border-radius: 4px;
     color: var(--text-primary);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
 .form-group input[type="range"] {
     width: 100%;
+    height: 6px;
 }
 
 .form-group select[multiple] {
@@ -358,17 +359,17 @@ body {
 
 .buttons {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 .btn-primary,
 .btn-secondary {
     flex: 1;
-    padding: 10px 16px;
+    padding: 8px 12px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 600;
     transition: opacity 0.2s;
 }
