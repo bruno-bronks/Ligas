@@ -191,8 +191,8 @@ body {
 
 .league-item:hover .league-icon-wrapper {
     transform: scale(1.2);
-    border-color: rgba(128, 128, 128, 0.5);
-    box-shadow: 0 0 18px rgba(128, 128, 128, 0.25);
+    border-color: rgba(255, 255, 255, 0.45);
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.25);
 }
 
 .league-item input[type="checkbox"]:checked ~ .league-name {
@@ -228,9 +228,9 @@ body {
     justify-content: center;
     flex-shrink: 0;
     transition: all 0.3s ease;
-    background: rgba(128, 128, 128, 0.12);
+    background: transparent;
     border-radius: 6px;
-    border: 1.5px solid rgba(128, 128, 128, 0.25);
+    border: 1.5px solid rgba(255, 255, 255, 0.18);
     overflow: visible;
     position: relative;
     cursor: pointer;
@@ -285,8 +285,8 @@ body {
     padding: 3px;
     display: block;
     transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
-    filter: grayscale(1) brightness(0.75);
-    opacity: 0.9;
+    filter: none;
+    opacity: 1;
 }
 
 .league-item:hover .league-logo {
@@ -311,21 +311,21 @@ body {
 }
 
 .league-item input[type="checkbox"]:checked ~ .league-icon-wrapper {
-    box-shadow: 0 0 24px rgba(128, 128, 128, 0.35);
+    box-shadow: 0 0 22px rgba(255, 215, 0, 0.4);
     transform: scale(1.05);
     filter: none;
-    border-color: rgba(128, 128, 128, 0.6);
-    background: rgba(128, 128, 128, 0.2);
+    border-color: #ffd700;
+    background: rgba(255, 255, 255, 0.12);
 }
 
 .league-item input[type="checkbox"]:checked ~ .league-icon-wrapper .league-logo {
     opacity: 1;
-    filter: grayscale(1) brightness(0.9);
+    filter: none;
 }
 
 .league-item input[type="checkbox"]:not(:checked) ~ .league-icon-wrapper .league-logo {
     opacity: 0.6;
-    filter: grayscale(1) brightness(0.65);
+    filter: none;
 }
 
 .league-name {
