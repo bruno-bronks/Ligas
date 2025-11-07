@@ -360,7 +360,7 @@ body {
 .buttons {
     display: flex;
     gap: 8px;
-    margin-top: 20px;
+    margin-top: 25px;
 }
 
 .btn-primary,
