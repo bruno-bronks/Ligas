@@ -12,7 +12,7 @@
         <main class="main-content">
             <header>
                 <h1>⚽ Análise das Ligas — Top‑4 × Bottom‑3</h1>
-                <p class="caption">Ligas: Bundesliga, Premier League, Ligue 1, Eredivisie, Brasileirão A, La Liga e Champions League. Probabilidades por Bradley‑Terry (heurístico).</p>
+                <p class="caption">Ligas: Bundesliga, Premier League, Ligue 1, Eredivisie, Brasileirão A, La Liga, Rússia, Ucrânia, Arábia Saudita, Turquia, China e Champions League. Probabilidades por Bradley‑Terry (heurístico).</p>
             </header>
 
             <!-- Controles -->
@@ -103,6 +103,46 @@
                                 <span class="league-icon-fallback" data-league="PD">ES</span>
                             </div>
                             <span class="league-name">La Liga</span>
+                        </label>
+                        <label class="league-item">
+                            <input type="checkbox" value="RPL">
+                            <div class="league-icon-wrapper" data-league="RPL">
+                                <img src="https://media.api-sports.io/football/leagues/235.png" alt="Russian Premier League" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <span class="league-icon-fallback" data-league="RPL">RU</span>
+                            </div>
+                            <span class="league-name">Premier League Rússia</span>
+                        </label>
+                        <label class="league-item">
+                            <input type="checkbox" value="UPL">
+                            <div class="league-icon-wrapper" data-league="UPL">
+                                <img src="https://media.api-sports.io/football/leagues/332.png" alt="Ukrainian Premier League" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <span class="league-icon-fallback" data-league="UPL">UA</span>
+                            </div>
+                            <span class="league-name">Premier League Ucrânia</span>
+                        </label>
+                        <label class="league-item">
+                            <input type="checkbox" value="SAL">
+                            <div class="league-icon-wrapper" data-league="SAL">
+                                <img src="https://media.api-sports.io/football/leagues/350.png" alt="Saudi Pro League" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <span class="league-icon-fallback" data-league="SAL">SA</span>
+                            </div>
+                            <span class="league-name">Pro League Arábia Saudita</span>
+                        </label>
+                        <label class="league-item">
+                            <input type="checkbox" value="TR1">
+                            <div class="league-icon-wrapper" data-league="TR1">
+                                <img src="https://media.api-sports.io/football/leagues/203.png" alt="Turkish Süper Lig" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <span class="league-icon-fallback" data-league="TR1">TR</span>
+                            </div>
+                            <span class="league-name">Süper Lig Turquia</span>
+                        </label>
+                        <label class="league-item">
+                            <input type="checkbox" value="CSL">
+                            <div class="league-icon-wrapper" data-league="CSL">
+                                <img src="https://media.api-sports.io/football/leagues/169.png" alt="Chinese Super League" class="league-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <span class="league-icon-fallback" data-league="CSL">CN</span>
+                            </div>
+                            <span class="league-name">Super League China</span>
                         </label>
                         <label class="league-item" id="clLeagueItem">
                             <input type="checkbox" value="CL">
