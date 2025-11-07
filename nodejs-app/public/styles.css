@@ -143,25 +143,15 @@ body {
     flex-wrap: nowrap;
     overflow-x: auto;
     overflow-y: visible; /* Permitir tooltips acima */
+    scrollbar-width: none; /* Firefox - esconder scrollbar */
+    -ms-overflow-style: none; /* IE e Edge - esconder scrollbar */
 }
 
 .leagues-grid::-webkit-scrollbar {
-    width: 6px;
+    display: none; /* Chrome, Safari, Opera - esconder scrollbar */
 }
 
-.leagues-grid::-webkit-scrollbar-track {
-    background: var(--bg-dark);
-    border-radius: 3px;
-}
-
-.leagues-grid::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-    border-radius: 3px;
-}
-
-.leagues-grid::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-color);
-}
+/* Scrollbar escondida mas scroll ainda funciona */
 
 .league-item {
     display: flex;
@@ -721,24 +711,7 @@ table tr:last-child td {
     animation: fadeIn 0.5s ease;
 }
 
-/* Scrollbar personalizada */
-.leagues-grid::-webkit-scrollbar {
-    width: 6px;
-}
-
-.leagues-grid::-webkit-scrollbar-track {
-    background: var(--bg-sidebar);
-    border-radius: 3px;
-}
-
-.leagues-grid::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-    border-radius: 3px;
-}
-
-.leagues-grid::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-color);
-}
+/* Scrollbar removida - código duplicado removido */
 
 /* Responsive */
 @media (max-width: 768px) {
