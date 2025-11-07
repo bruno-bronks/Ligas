@@ -15,7 +15,6 @@ const BASE_LEAGUES = {
 };
 
 // Elementos DOM
-const includeCLCheckbox = document.getElementById('includeCL');
 const leaguesContainer = document.getElementById('leaguesContainer');
 const daysSlider = document.getElementById('days');
 const daysValue = document.getElementById('daysValue');
@@ -436,18 +435,13 @@ function downloadCSV(data, filename) {
 }
 
 function updateLeaguesList() {
-    const includeCL = includeCLCheckbox.checked;
+    const leaguesContainer = document.getElementById('leaguesContainer');
     const clLeagueItem = document.getElementById('clLeagueItem');
     
     if (clLeagueItem) {
-        if (includeCL) {
-            clLeagueItem.style.display = 'flex';
-        } else {
-            clLeagueItem.style.display = 'none';
-            // Desmarcar CL se estiver marcado
-            const clCheckbox = clLeagueItem.querySelector('input[type="checkbox"]');
-            if (clCheckbox) clCheckbox.checked = false;
-        }
+        // Desmarcar CL se estiver marcado
+        const clCheckbox = clLeagueItem.querySelector('input[type="checkbox"]');
+        if (clCheckbox) clCheckbox.checked = false;
     }
 }
 
@@ -470,10 +464,6 @@ function hideError() {
 
 // Inicialização - garantir que CL apareça se checkbox estiver marcado
 document.addEventListener('DOMContentLoaded', () => {
-    updateLeaguesList();
-});
-
-includeCLCheckbox.addEventListener('change', () => {
     updateLeaguesList();
 });
 
