@@ -157,10 +157,10 @@ body {
     flex-wrap: nowrap;
     overflow-x: hidden;
     overflow-y: visible; /* Permitir tooltips acima */
-    background: #ffffff;
+    background: transparent;
     border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.15);
+    border: none;
+    box-shadow: none;
 }
 
 .leagues-grid::-webkit-scrollbar {
@@ -191,8 +191,8 @@ body {
 
 .league-item:hover .league-icon-wrapper {
     transform: scale(1.2);
-    border-color: rgba(15, 23, 42, 0.4);
-    box-shadow: 0 0 18px rgba(15, 23, 42, 0.18);
+    border-color: rgba(128, 128, 128, 0.5);
+    box-shadow: 0 0 18px rgba(128, 128, 128, 0.25);
 }
 
 .league-item input[type="checkbox"]:checked ~ .league-name {
@@ -228,9 +228,9 @@ body {
     justify-content: center;
     flex-shrink: 0;
     transition: all 0.3s ease;
-    background: rgba(15, 23, 42, 0.08);
+    background: rgba(128, 128, 128, 0.12);
     border-radius: 6px;
-    border: 1.5px solid rgba(15, 23, 42, 0.12);
+    border: 1.5px solid rgba(128, 128, 128, 0.25);
     overflow: visible;
     position: relative;
     cursor: pointer;
@@ -285,8 +285,8 @@ body {
     padding: 3px;
     display: block;
     transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
-    filter: brightness(0) saturate(0%) invert(1) contrast(180%);
-    opacity: 0.95;
+    filter: grayscale(1) brightness(0.75);
+    opacity: 0.9;
 }
 
 .league-item:hover .league-logo {
@@ -311,26 +311,21 @@ body {
 }
 
 .league-item input[type="checkbox"]:checked ~ .league-icon-wrapper {
-    box-shadow: 0 0 24px rgba(31, 119, 180, 0.35);
+    box-shadow: 0 0 24px rgba(128, 128, 128, 0.35);
     transform: scale(1.05);
     filter: none;
-    border-color: var(--secondary-color);
-    background: rgba(31, 119, 180, 0.15);
+    border-color: rgba(128, 128, 128, 0.6);
+    background: rgba(128, 128, 128, 0.2);
 }
 
 .league-item input[type="checkbox"]:checked ~ .league-icon-wrapper .league-logo {
     opacity: 1;
-    filter: brightness(0) saturate(0%) invert(1) contrast(220%);
-}
-
-.league-item input[type="checkbox"]:not(:checked) ~ .league-icon-wrapper {
-    opacity: 0.55;
-    filter: none;
+    filter: grayscale(1) brightness(0.9);
 }
 
 .league-item input[type="checkbox"]:not(:checked) ~ .league-icon-wrapper .league-logo {
-    opacity: 0.55;
-    filter: brightness(0) saturate(0%) invert(1) contrast(160%);
+    opacity: 0.6;
+    filter: grayscale(1) brightness(0.65);
 }
 
 .league-name {
