@@ -414,10 +414,11 @@ const AVAILABLE_COMPETITIONS = [
 ];
 
 // Listar competições disponíveis (lista hardcoded pois endpoint não está disponível no plano gratuito)
-app.post('/api/list-competitions', async (req, res) => {
+app.get('/api/list-competitions', (req, res) => {
   try {
     // Retornar lista hardcoded de competições conhecidas
     // Nota: O endpoint /competitions da API não está disponível no plano gratuito
+    // Não precisa de API key pois não faz chamadas à API
     const competitions = AVAILABLE_COMPETITIONS.map(comp => ({
       code: comp.code,
       name: comp.name,

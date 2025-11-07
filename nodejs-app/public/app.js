@@ -50,24 +50,14 @@ clearCacheBtn.addEventListener('click', async () => {
 });
 
 listCompetitionsBtn.addEventListener('click', async () => {
-    const apiKey = apiKeyInput.value.trim();
-    
-    if (!apiKey) {
-        showError('Por favor, informe a API Key');
-        return;
-    }
-
     showLoading();
     hideError();
     contentDiv.innerHTML = '';
 
     try {
+        // Não precisa de API key pois retorna lista hardcoded
         const response = await fetch('/api/list-competitions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ token: apiKey })
+            method: 'GET'
         });
 
         // Verificar Content-Type antes de fazer parse
