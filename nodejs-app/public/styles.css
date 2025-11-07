@@ -292,7 +292,7 @@ body {
     padding: 3px;
     display: block;
     transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
-    filter: brightness(0) saturate(100%) invert(1);
+    filter: brightness(0) saturate(0%) invert(1) contrast(180%);
     opacity: 0.95;
 }
 
@@ -327,7 +327,7 @@ body {
 
 .league-item input[type="checkbox"]:checked ~ .league-icon-wrapper .league-logo {
     opacity: 1;
-    filter: brightness(0) saturate(100%) invert(1);
+    filter: brightness(0) saturate(0%) invert(1) contrast(220%);
 }
 
 .league-item input[type="checkbox"]:not(:checked) ~ .league-icon-wrapper {
@@ -337,7 +337,7 @@ body {
 
 .league-item input[type="checkbox"]:not(:checked) ~ .league-icon-wrapper .league-logo {
     opacity: 0.55;
-    filter: brightness(0) saturate(100%) invert(1);
+    filter: brightness(0) saturate(0%) invert(1) contrast(160%);
 }
 
 .league-name {
