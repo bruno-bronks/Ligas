@@ -100,25 +100,18 @@ body {
 }
 
 .leagues-section {
-    margin-top: 20px;
-    padding-top: 50px; /* Espaço extra para tooltips acima */
-    border-top: 1px solid var(--border-color);
-    overflow: visible !important; /* Permitir tooltips acima */
-    position: relative;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: visible;
 }
 
-.form-group.leagues-section {
-    overflow: visible !important;
-    position: relative;
-    padding-top: 50px !important; /* Espaço extra para tooltips */
-}
-
-.form-group.leagues-section label {
+.leagues-title {
     color: #ffffff;
-}
-
-.leagues-section .form-group {
-    margin-bottom: 0;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin: 0 6px;
 }
 
 .form-group {
