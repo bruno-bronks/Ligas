@@ -41,7 +41,7 @@ body {
 /* Controls Section */
 .controls-section {
     background: linear-gradient(135deg, #1f77b4 0%, #2a8fd4 100%);
-    padding: 20px;
+    padding: 15px 8px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
     margin-bottom: 30px;
@@ -138,8 +138,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 4px;
-    padding: 5px;
+    gap: 2px;
+    padding: 3px 2px;
     margin-top: 8px;
     flex-wrap: nowrap;
     overflow-x: hidden;
@@ -156,18 +156,18 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 3px;
-    padding: 3px 2px;
+    gap: 2px;
+    padding: 2px 1px;
     background-color: transparent;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
     transition: all 0.2s ease;
     user-select: none;
     position: relative;
     flex-direction: column;
-    flex: 1 1 calc(8.33% - 5px);
-    min-width: 50px;
+    flex: 1 1 calc(8.33% - 2px);
+    min-width: 45px;
     max-width: none;
 }
 
@@ -203,16 +203,16 @@ body {
 }
 
 .league-icon-wrapper {
-    width: 38px;
-    height: 38px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     transition: all 0.3s ease;
     background: rgba(31, 119, 180, 0.05);
-    border-radius: 6px;
-    border: 2px solid rgba(31, 119, 180, 0.2);
+    border-radius: 5px;
+    border: 1.5px solid rgba(31, 119, 180, 0.2);
     overflow: visible;
     position: relative;
     cursor: pointer;
@@ -264,7 +264,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    padding: 4px;
+    padding: 3px;
     display: block;
     transition: transform 0.3s ease;
 }
@@ -731,19 +731,20 @@ table tr:last-child td {
 
     .leagues-grid {
         justify-content: space-between;
-        gap: 3px;
+        gap: 2px;
+        padding: 2px 1px;
     }
 
     .league-item {
-        flex: 1 1 calc(8.33% - 3px);
-        min-width: 45px;
+        flex: 1 1 calc(8.33% - 2px);
+        min-width: 40px;
         max-width: none;
         padding: 2px 1px;
     }
 
     .league-icon-wrapper {
-        width: 35px;
-        height: 35px;
+        width: 30px;
+        height: 30px;
     }
 
     .league-name {
@@ -771,19 +772,20 @@ table tr:last-child td {
 
 @media (max-width: 480px) {
     .leagues-grid {
-        gap: 2px;
+        gap: 1px;
+        padding: 2px 1px;
     }
     
     .league-item {
-        flex: 1 1 calc(8.33% - 2px);
-        min-width: 40px;
+        flex: 1 1 calc(8.33% - 1px);
+        min-width: 35px;
         max-width: none;
-        padding: 2px 1px;
+        padding: 1px;
     }
 
     .league-icon-wrapper {
-        width: 32px;
-        height: 32px;
+        width: 28px;
+        height: 28px;
     }
 
     .league-name {
