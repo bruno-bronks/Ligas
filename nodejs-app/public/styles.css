@@ -173,8 +173,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 4px;
-    padding: 48px 2px 6px 2px; /* Padding-top para espaço dos tooltips */
+    gap: 6px;
+    padding: 56px 4px 8px 4px; /* Espaço extra para tooltips */
     background-color: transparent;
     border: none;
     border-radius: 6px;
@@ -183,8 +183,8 @@ body {
     user-select: none;
     position: relative;
     flex-direction: column;
-    flex: 1 1 calc(8.33% - 4px);
-    min-width: 70px;
+    flex: 1 1 calc(8.33% - 6px);
+    min-width: 84px;
     max-width: none;
     overflow: visible; /* Permitir tooltips */
 }
@@ -221,15 +221,15 @@ body {
 }
 
 .league-icon-wrapper {
-    width: 48px;
-    height: 48px;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     transition: all 0.3s ease;
     background: transparent;
-    border-radius: 10px;
+    border-radius: 12px;
     border: 1.5px solid rgba(255, 255, 255, 0.2);
     overflow: visible;
     position: relative;
@@ -282,7 +282,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    padding: 6px;
+    padding: 8px;
     display: block;
     transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
     filter: grayscale(1) brightness(0.75);
@@ -759,19 +759,19 @@ table tr:last-child td {
     }
 
     .league-item {
-        flex: 1 1 calc(8.33% - 3px);
-        min-width: 60px;
-        padding: 40px 2px 5px 2px;
+        flex: 1 1 calc(8.33% - 4px);
+        min-width: 72px;
+        padding: 48px 3px 6px 3px;
     }
 
     .league-icon-wrapper {
-        width: 42px;
-        height: 42px;
-        border-radius: 8px;
+        width: 52px;
+        height: 52px;
+        border-radius: 10px;
     }
 
     .league-logo {
-        padding: 5px;
+        padding: 6px;
     }
 
     .league-name {
@@ -804,19 +804,19 @@ table tr:last-child td {
     }
     
     .league-item {
-        flex: 1 1 calc(8.33% - 2px);
-        min-width: 52px;
-        padding: 34px 2px 4px 2px;
+        flex: 1 1 calc(8.33% - 3px);
+        min-width: 60px;
+        padding: 40px 2px 5px 2px;
     }
 
     .league-icon-wrapper {
-        width: 38px;
-        height: 38px;
-        border-radius: 7px;
+        width: 46px;
+        height: 46px;
+        border-radius: 8px;
     }
 
     .league-logo {
-        padding: 4px;
+        padding: 5px;
     }
 
     .league-name {
