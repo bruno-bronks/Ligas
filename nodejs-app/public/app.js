@@ -24,6 +24,7 @@ const dateFromInput = document.getElementById('dateFrom');
 const dateToInput = document.getElementById('dateTo');
 const refreshBtn = document.getElementById('refreshBtn');
 const clearCacheBtn = document.getElementById('clearCacheBtn');
+const listCompetitionsBtn = document.getElementById('listCompetitionsBtn');
 const loadingDiv = document.getElementById('loading');
 const errorDiv = document.getElementById('error');
 const contentDiv = document.getElementById('content');
@@ -45,6 +46,42 @@ clearCacheBtn.addEventListener('click', async () => {
     } catch (error) {
         console.error('Erro ao limpar cache:', error);
         alert('Erro ao limpar cache');
+    }
+});
+
+listCompetitionsBtn.addEventListener('click', async () => {
+    const apiKey = apiKeyInput.value.trim();
+    
+    if (!apiKey) {
+        showError('Por favor, informe a API Key');
+        return;
+    }
+
+    showLoading();
+    hideError();
+    contentDiv.innerHTML = '';
+
+    try {
+        const response = await fetch('/api/list-competitions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ token: apiKey })
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || 'Erro ao buscar competições');
+        }
+
+        const data = await response.json();
+        renderCompetitionsList(data);
+    } catch (error) {
+        console.error('Erro ao listar competições:', error);
+        showError(`Erro ao listar competições: ${error.message}`);
+    } finally {
+        hideLoading();
     }
 });
 
@@ -406,6 +443,74 @@ function createProbabilitiesTable(probabilities, standings = []) {
     table.appendChild(thead);
     table.appendChild(tbody);
     return table;
+}
+
+function renderCompetitionsList(data) {
+    const section = document.createElement('div');
+    section.className = 'league-section';
+    section.innerHTML = `<h3>📋 Competições Disponíveis (${data.total})</h3>`;
+
+    if (!data.competitions || data.competitions.length === 0) {
+        section.innerHTML += '<div class="info-message">Nenhuma competição encontrada.</div>';
+        contentDiv.appendChild(section);
+        return;
+    }
+
+    const table = document.createElement('table');
+    table.className = 'data-table';
+    
+    const thead = document.createElement('thead');
+    thead.innerHTML = `
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Tipo</th>
+            <th>País/Área</th>
+            <th>Plano</th>
+        </tr>
+    `;
+
+    const tbody = document.createElement('tbody');
+    
+    // Filtrar e destacar as ligas que estamos usando
+    const ourLeagues = ['BL1', 'PL', 'FL1', 'DED', 'BSA', 'PD', 'RFPL', 'UPL', 'SA', 'TUR', 'CL1', 'CL'];
+    
+    data.competitions.forEach(comp => {
+        const tr = document.createElement('tr');
+        const isOurLeague = ourLeagues.includes(comp.code);
+        if (isOurLeague) {
+            tr.style.backgroundColor = 'rgba(76, 175, 80, 0.1)';
+            tr.style.borderLeft = '4px solid rgba(76, 175, 80, 0.6)';
+        }
+        
+        const planBadge = comp.plan 
+            ? `<span class="position-badge ${comp.plan === 'TIER_ONE' ? 'top3' : comp.plan === 'TIER_TWO' ? 'bottom3' : ''}">${comp.plan}</span>`
+            : '-';
+        
+        tr.innerHTML = `
+            <td><strong>${comp.code || '-'}</strong></td>
+            <td>${comp.name || '-'}</td>
+            <td>${comp.type || '-'}</td>
+            <td>${comp.area ? `${comp.area.name} (${comp.area.code})` : '-'}</td>
+            <td>${planBadge}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    section.appendChild(table);
+    
+    // Adicionar botão de download
+    const downloadBtn = document.createElement('button');
+    downloadBtn.className = 'download-btn';
+    downloadBtn.textContent = '⬇️ Baixar CSV (Competições)';
+    downloadBtn.onclick = () => {
+        downloadCSV(data.competitions, 'competitions_list.csv');
+    };
+    section.appendChild(downloadBtn);
+    
+    contentDiv.appendChild(section);
 }
 
 function formatDateBR(isoString) {

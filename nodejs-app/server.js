@@ -367,6 +367,46 @@ app.post('/api/clear-cache', (req, res) => {
   res.json({ message: 'Cache limpo' });
 });
 
+// Listar competições disponíveis
+app.post('/api/list-competitions', async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    if (!token) {
+      return res.status(400).json({ error: 'API token é obrigatório' });
+    }
+
+    const url = `${API_BASE}/competitions`;
+    const data = await requestWithRetry(url, token);
+
+    // Formatar resposta para facilitar visualização
+    const competitions = (data.competitions || []).map(comp => ({
+      code: comp.code,
+      name: comp.name,
+      type: comp.type,
+      emblem: comp.emblem,
+      plan: comp.plan, // Indica se é free, tier-one, etc.
+      area: comp.area ? {
+        name: comp.area.name,
+        code: comp.area.code
+      } : null
+    }));
+
+    // Ordenar por nome
+    competitions.sort((a, b) => a.name.localeCompare(b.name));
+
+    res.json({
+      total: competitions.length,
+      competitions
+    });
+  } catch (error) {
+    console.error('Erro ao listar competições:', error);
+    res.status(500).json({ 
+      error: error.message || 'Erro ao listar competições da API' 
+    });
+  }
+});
+
 // Health check
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
