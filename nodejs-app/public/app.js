@@ -8,7 +8,7 @@ const BASE_LEAGUES = {
     'PD': 'Espanha - La Liga',
     'RFPL': 'Rússia - Premier League',
     'UPL': 'Ucrânia - Premier League',
-    'SA': 'Arábia Saudita - Pro League',
+    'SAL': 'Arábia Saudita - Pro League',
     'TUR': 'Turquia - Süper Lig',
     'CL1': 'China - Super League',
     'CL': 'Champions League'
@@ -473,6 +473,14 @@ function renderCompetitionsList(data) {
     section.className = 'league-section';
     section.innerHTML = `<h3>📋 Competições Disponíveis (${data.total})</h3>`;
 
+    if (data.note) {
+        const noteDiv = document.createElement('div');
+        noteDiv.className = 'info-message';
+        noteDiv.style.marginBottom = '15px';
+        noteDiv.textContent = data.note;
+        section.appendChild(noteDiv);
+    }
+
     if (!data.competitions || data.competitions.length === 0) {
         section.innerHTML += '<div class="info-message">Nenhuma competição encontrada.</div>';
         contentDiv.appendChild(section);
@@ -490,13 +498,14 @@ function renderCompetitionsList(data) {
             <th>Tipo</th>
             <th>País/Área</th>
             <th>Plano</th>
+            <th>Nota</th>
         </tr>
     `;
 
     const tbody = document.createElement('tbody');
     
     // Filtrar e destacar as ligas que estamos usando
-    const ourLeagues = ['BL1', 'PL', 'FL1', 'DED', 'BSA', 'PD', 'RFPL', 'UPL', 'SA', 'TUR', 'CL1', 'CL'];
+    const ourLeagues = ['BL1', 'PL', 'FL1', 'DED', 'BSA', 'PD', 'RFPL', 'UPL', 'SAL', 'TUR', 'CL1', 'CL'];
     
     data.competitions.forEach(comp => {
         const tr = document.createElement('tr');
@@ -516,6 +525,7 @@ function renderCompetitionsList(data) {
             <td>${comp.type || '-'}</td>
             <td>${comp.area ? `${comp.area.name} (${comp.area.code})` : '-'}</td>
             <td>${planBadge}</td>
+            <td>${comp.note || '-'}</td>
         `;
         tbody.appendChild(tr);
     });

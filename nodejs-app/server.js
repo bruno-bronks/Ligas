@@ -388,29 +388,43 @@ app.post('/api/clear-cache', (req, res) => {
   res.json({ message: 'Cache limpo' });
 });
 
-// Listar competições disponíveis
+// Lista hardcoded de competições disponíveis no plano gratuito
+// (O endpoint /competitions não está disponível no plano gratuito)
+const AVAILABLE_COMPETITIONS = [
+  // Ligas principais (geralmente disponíveis no plano gratuito)
+  { code: 'BL1', name: 'Bundesliga', type: 'LEAGUE', area: { name: 'Germany', code: 'DE' }, plan: 'TIER_ONE' },
+  { code: 'PL', name: 'Premier League', type: 'LEAGUE', area: { name: 'England', code: 'GB' }, plan: 'TIER_ONE' },
+  { code: 'FL1', name: 'Ligue 1', type: 'LEAGUE', area: { name: 'France', code: 'FR' }, plan: 'TIER_ONE' },
+  { code: 'PD', name: 'La Liga', type: 'LEAGUE', area: { name: 'Spain', code: 'ES' }, plan: 'TIER_ONE' },
+  { code: 'SA', name: 'Serie A', type: 'LEAGUE', area: { name: 'Italy', code: 'IT' }, plan: 'TIER_ONE' },
+  { code: 'DED', name: 'Eredivisie', type: 'LEAGUE', area: { name: 'Netherlands', code: 'NL' }, plan: 'TIER_ONE' },
+  { code: 'PPL', name: 'Primeira Liga', type: 'LEAGUE', area: { name: 'Portugal', code: 'PT' }, plan: 'TIER_ONE' },
+  { code: 'BSA', name: 'Brasileirão Série A', type: 'LEAGUE', area: { name: 'Brazil', code: 'BR' }, plan: 'TIER_ONE' },
+  { code: 'CL', name: 'Champions League', type: 'CUP', area: { name: 'Europe', code: 'EU' }, plan: 'TIER_ONE' },
+  { code: 'EL', name: 'Europa League', type: 'CUP', area: { name: 'Europe', code: 'EU' }, plan: 'TIER_ONE' },
+  { code: 'EC', name: 'European Championship', type: 'CUP', area: { name: 'Europe', code: 'EU' }, plan: 'TIER_ONE' },
+  { code: 'WC', name: 'World Cup', type: 'CUP', area: { name: 'World', code: 'INT' }, plan: 'TIER_ONE' },
+  
+  // Ligas que podem estar disponíveis (testar)
+  { code: 'RFPL', name: 'Russian Premier League', type: 'LEAGUE', area: { name: 'Russia', code: 'RU' }, plan: 'TIER_TWO', note: 'Verificar disponibilidade' },
+  { code: 'UPL', name: 'Ukrainian Premier League', type: 'LEAGUE', area: { name: 'Ukraine', code: 'UA' }, plan: 'TIER_TWO', note: 'Verificar disponibilidade' },
+  { code: 'SAL', name: 'Saudi Pro League', type: 'LEAGUE', area: { name: 'Saudi Arabia', code: 'SA' }, plan: 'TIER_TWO', note: 'Verificar disponibilidade' },
+  { code: 'TUR', name: 'Turkish Süper Lig', type: 'LEAGUE', area: { name: 'Turkey', code: 'TR' }, plan: 'TIER_TWO', note: 'Verificar disponibilidade' },
+  { code: 'CL1', name: 'Chinese Super League', type: 'LEAGUE', area: { name: 'China', code: 'CN' }, plan: 'TIER_TWO', note: 'Verificar disponibilidade' },
+];
+
+// Listar competições disponíveis (lista hardcoded pois endpoint não está disponível no plano gratuito)
 app.post('/api/list-competitions', async (req, res) => {
   try {
-    const { token } = req.body;
-
-    if (!token) {
-      return res.status(400).json({ error: 'API token é obrigatório' });
-    }
-
-    const url = `${API_BASE}/competitions`;
-    const data = await requestWithRetry(url, token);
-
-    // Formatar resposta para facilitar visualização
-    const competitions = (data.competitions || []).map(comp => ({
+    // Retornar lista hardcoded de competições conhecidas
+    // Nota: O endpoint /competitions da API não está disponível no plano gratuito
+    const competitions = AVAILABLE_COMPETITIONS.map(comp => ({
       code: comp.code,
       name: comp.name,
       type: comp.type,
-      emblem: comp.emblem,
-      plan: comp.plan, // Indica se é free, tier-one, etc.
-      area: comp.area ? {
-        name: comp.area.name,
-        code: comp.area.code
-      } : null
+      plan: comp.plan,
+      area: comp.area,
+      note: comp.note || null
     }));
 
     // Ordenar por nome
@@ -418,12 +432,13 @@ app.post('/api/list-competitions', async (req, res) => {
 
     res.json({
       total: competitions.length,
-      competitions
+      competitions,
+      note: 'Lista baseada na documentação da API. Algumas competições podem não estar disponíveis no seu plano. Teste individualmente para confirmar.'
     });
   } catch (error) {
     console.error('Erro ao listar competições:', error);
     res.status(500).json({ 
-      error: error.message || 'Erro ao listar competições da API' 
+      error: error.message || 'Erro ao listar competições' 
     });
   }
 });
