@@ -40,23 +40,23 @@ body {
 
 /* Controls Section */
 .controls-section {
-    background: #ffffff;
+    background: #000000;
     padding: 15px 8px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
     margin-bottom: 30px;
     box-shadow: var(--card-shadow);
-    color: var(--text-primary);
+    color: #ffffff;
     overflow: visible; /* Permitir tooltips */
     position: relative;
 }
 
 .controls-section .form-group label {
-    color: var(--text-primary);
+    color: #ffffff;
 }
 
 .controls-section .form-group small {
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .controls-section input[type="text"],
@@ -71,13 +71,21 @@ body {
 }
 
 .controls-section span#daysValue {
-    color: var(--primary-color);
+    color: #ffd700;
     font-weight: 700;
     font-size: 1rem;
 }
 
 .controls-section .league-name {
-    color: var(--text-primary);
+    color: #ffffff;
+}
+
+.controls-section input[type="checkbox"] {
+    accent-color: #ffd700;
+}
+
+.controls-section label {
+    color: #ffffff;
 }
 
 .controls-grid {
