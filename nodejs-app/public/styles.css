@@ -221,9 +221,50 @@ body {
     background: rgba(31, 119, 180, 0.05);
     border-radius: 8px;
     border: 2px solid rgba(31, 119, 180, 0.2);
-    overflow: hidden;
+    overflow: visible;
     position: relative;
     cursor: pointer;
+}
+
+/* Tooltip */
+.league-icon-wrapper::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background: rgba(0, 0, 0, 0.9);
+    color: #ffffff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.league-icon-wrapper::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-2px);
+    border: 5px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1001;
+}
+
+.league-icon-wrapper:hover::after,
+.league-icon-wrapper:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }
 
 .league-logo {
@@ -276,13 +317,7 @@ body {
 }
 
 .league-name {
-    font-size: 0.65rem;
-    font-weight: 500;
-    color: #ffffff;
-    text-align: center;
-    margin-top: 3px;
-    white-space: nowrap;
-    line-height: 1.2;
+    display: none; /* Esconder nome abaixo dos logotipos */
 }
 
 .league-item input[type="checkbox"]:checked ~ .league-name {
