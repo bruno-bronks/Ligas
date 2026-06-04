@@ -1,0 +1,51 @@
+# Football Intelligence Dashboard - Backend
+# Python dependencies
+
+# Core Framework
+fastapi==0.115.0
+uvicorn[standard]==0.30.0
+pydantic==2.9.0
+pydantic-settings==2.5.0
+
+# Database
+sqlalchemy[asyncio]==2.0.35
+asyncpg>=0.30.0
+psycopg2-binary>=2.9.9
+alembic==1.13.0
+
+# Redis
+redis[hiredis]>=5.1.0
+aioredis==2.0.1
+
+# Celery
+celery[redis]==5.4.0
+
+# HTTP Client
+httpx==0.27.0
+aiohttp>=3.10.0
+
+# Auth
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.9
+
+# LLM
+openai==1.50.0
+google-generativeai==0.8.0
+
+# Export
+openpyxl==3.1.5
+reportlab==4.2.0
+
+# Utilities
+python-dotenv==1.0.1
+orjson>=3.10.0
+tenacity==9.0.0
+
+# Testing
+pytest==8.3.0
+pytest-asyncio==0.24.0
+httpx==0.27.0
+
+# Logging
+loguru==0.7.2

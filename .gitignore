@@ -1,0 +1,35 @@
+# OS files
+.DS_Store
+Thumbs.db
+db.sqlite3
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python files
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+*.db
+
+# Node / Frontend files
+node_modules/
+.next/
+out/
+build/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Application cache / data
+backend/app/data/
+backend/app/data/logo_cache/
+*.log
