@@ -9,7 +9,15 @@ export default function AdminPanel() {
   const [selectedLeague, setSelectedLeague] = useState("PL");
   const [syncSeason, setSyncSeason] = useState(2024);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
+  const getApiUrl = (): string => {
+    if (typeof window !== "undefined") {
+      const host = window.location.hostname;
+      const port = host === "localhost" || host === "127.0.0.1" ? "8000" : "8001";
+      return `http://${host}:${port}/api/v1`;
+    }
+    return "http://localhost:8000/api/v1";
+  };
+  const API_URL = getApiUrl();
 
   const leaguesList = [
     { code: "PL", name: "Premier League (England)", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },

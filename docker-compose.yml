@@ -49,6 +49,11 @@ services:
     volumes:
       - ./backend:/app
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:////app/football_intelligence.db
+      - DATABASE_URL_SYNC=sqlite:////app/football_intelligence.db
+      - CORS_ORIGINS=http://localhost:3000,http://127.0.0.1:3000,http://2.25.140.67:3010,http://2.25.140.67:8001
+      - REDIS_URL=redis://redis:6379/0
 
   # --- Celery Worker ---
   worker:
@@ -66,6 +71,10 @@ services:
     volumes:
       - ./backend:/app
     command: celery -A app.workers.celery_app worker --loglevel=info --concurrency=2
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:////app/football_intelligence.db
+      - DATABASE_URL_SYNC=sqlite:////app/football_intelligence.db
+      - REDIS_URL=redis://redis:6379/0
 
   # --- Celery Beat Scheduler ---
   beat:
@@ -83,6 +92,10 @@ services:
     volumes:
       - ./backend:/app
     command: celery -A app.workers.celery_app beat --loglevel=info
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:////app/football_intelligence.db
+      - DATABASE_URL_SYNC=sqlite:////app/football_intelligence.db
+      - REDIS_URL=redis://redis:6379/0
 
   # --- Next.js Frontend ---
   frontend:
