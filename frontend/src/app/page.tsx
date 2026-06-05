@@ -46,15 +46,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const getApiUrl = (): string => {
-    if (typeof window !== "undefined") {
-      const host = window.location.hostname;
-      const port = host === "localhost" || host === "127.0.0.1" ? "8000" : "8001";
-      return `http://${host}:${port}/api/v1`;
-    }
-    return "http://localhost:8000/api/v1";
-  };
-  const API_URL = getApiUrl();
+  const API_URL = "/api/v1";
 
   const getProxiedImageUrl = (url: string | null): string => {
     if (!url) return "";
