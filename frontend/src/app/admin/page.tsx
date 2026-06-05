@@ -37,12 +37,15 @@ export default function AdminPanel() {
   ];
 
   const handleAction = async (actionName: string, endpoint: string, method = "POST", body: any = null) => {
+    console.log("[DEBUG] Clicked action:", actionName, "Endpoint:", endpoint, "API_URL:", API_URL);
     setLoadingAction(actionName);
     setResult(null);
     setError(null);
 
     try {
-      const res = await fetch(`${API_URL}${endpoint}`, {
+      const targetUrl = `${API_URL}${endpoint}`;
+      console.log("[DEBUG] Fetching URL:", targetUrl, "Method:", method, "Body:", body);
+      const res = await fetch(targetUrl, {
         method,
         headers: {
           "Content-Type": "application/json",
@@ -50,13 +53,17 @@ export default function AdminPanel() {
         body: body ? JSON.stringify(body) : null,
       });
 
+      console.log("[DEBUG] Action response status:", res.status);
+
       if (!res.ok) {
         throw new Error(`Action failed with status: ${res.status}`);
       }
 
       const data = await res.json();
+      console.log("[DEBUG] Action completed successfully, data:", data);
       setResult(data);
     } catch (err: any) {
+      console.error("[DEBUG] Action error occurred:", err);
       setError(err.message || "Ocorreu um erro inesperado.");
     } finally {
       setLoadingAction(null);

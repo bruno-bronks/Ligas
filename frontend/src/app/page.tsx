@@ -65,12 +65,16 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
+    console.log("[DEBUG] API_URL resolved to:", API_URL);
     async function fetchData() {
       try {
+        console.log("[DEBUG] Starting fetches to:", `${API_URL}/dashboard/overview`, "and", `${API_URL}/dashboard/highlights`);
         const [overviewRes, highlightsRes] = await Promise.all([
           fetch(`${API_URL}/dashboard/overview`),
           fetch(`${API_URL}/dashboard/highlights`),
         ]);
+
+        console.log("[DEBUG] Fetches completed. Overview status:", overviewRes.status, "Highlights status:", highlightsRes.status);
 
         if (!overviewRes.ok || !highlightsRes.ok) {
           throw new Error("Failed to fetch dashboard data");
@@ -78,10 +82,12 @@ export default function Dashboard() {
 
         const overviewData = await overviewRes.json();
         const highlightsData = await highlightsRes.json();
+        console.log("[DEBUG] Parsed data successfully. Leagues count:", overviewData.total_leagues);
 
         setOverview(overviewData);
         setHighlights(highlightsData);
       } catch (err: any) {
+        console.error("[DEBUG] Fetch error occurred:", err);
         setError(err.message || "Falha ao carregar dados do painel. O servidor backend está rodando?");
       } finally {
         setLoading(false);
